@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/8c3c6ff6e1.js" crossorigin="anonymous"></script>
+
+    <title>to_do</title>
+</head>
+
+<body>
+    <table id="table">
+        <tr>
+            <th>№</th>
+            <th>Create data</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>ToDo`s text</th>
+            <th>Deadline</th>
+            <th>Date fot text</th>
+            <th class="center-position">Edit</th>
+            <th class="center-position">Delete</th>
+            <th class="center-position">Compleate</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>06.06.2022</td>
+            <td>Programm learning</td>
+            <td>Todo`s project</td>
+            <td>Create todos project with clear JS</td>
+            <td>10/06/2022</td>
+            <td>10/06/2022, 06.06.2022</td>
+            <td id="edit_click" class="fa-parent">
+                <i class="fas fa-edit"></i>
+            </td>
+            <td id="delete_click" class="fa-parent">
+                <i class="fas fa-trash-alt"></i>
+            </td>
+            <td id="complete_click" class="fa-parent">
+                <i class="fas fa-check"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>06.06.2022</td>
+            <td>Programm learning</td>
+            <td>Todo`s project</td>
+            <td>Create todos project with clear JS</td>
+            <td>10/06/2022</td>
+            <td>10/06/2022, 06.06.2022</td>
+            <td id="edit_click" class="fa-parent">
+                <i class="fas fa-edit"></i>
+            </td>
+            <td id="delete_click" class="fa-parent">
+                <i class="fas fa-trash-alt"></i>
+            </td>
+            <td id="complete_click" class="fa-parent">
+                <i class="fas fa-check"></i>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>06.06.2022</td>
+            <td>Read Book</td>
+            <td>jonathan strange & mr norrell</td>
+            <td>Read jonathan strange & mr norrell</td>
+            <td>12/06/2022</td>
+            <td>10/06/2022, 06.06.2022</td>
+            <td id="edit_click" class="fa-parent">
+                <i class="fas fa-edit"></i>
+            </td>
+            <td id="delete_click" class="fa-parent">
+                <i class="fas fa-trash-alt"></i>
+            </td>
+            <td id="complete_click" class="fa-parent">
+                <i class="fas fa-check"></i>
+            </td>
+        </tr>
+    </table>
+    <div id="adder_button">
+        <button id="adder" class="button_style button_style_shadow">add new</button>
+    </div>
+
+    <div id="Post_Modal" class="modal_post">
+        <div class="post_content">
+            <span id="close" class="close">&times;</span>
+            <form action="javascript:void(0);">
+                <div>
+                    <label for="input_name">Task name</label>
+                    <input type="text" id="input_name">
+                </div>
+                <div>
+                    <label for="input_category">Task category</label>
+                    <select id="input_category">
+                        <option value="Another">Another</option>
+                        <option value="Books">Books</option>
+                        <option value="Programm">Programm</option>
+                    </select>    
+                </div>
+                <div>
+                    <label for="input_text">Task text</label>
+                    <input type="text" id="input_text">
+                </div>
+                <div>
+                    <label for="input_deadline">Deadline</label>
+                    <input type="datetime-local" id="input_deadline">
+                </div>
+                <div class="modal_buttons">
+                    <button id="Exit_modal" class="button_style_cencel button_style_shadow">Exit</button>
+                    <button id="Add_modal" class="button_style button_style_shadow">Add Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
