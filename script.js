@@ -26,9 +26,9 @@ window.onload = function () {
     let rand1 = RandomId();
     let rand2 = RandomId();
     let rand3 = RandomId();
-    Standart_db.set(rand1, new Task(rand1, new Date('2022-06-21T21:57'), "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", new Date('2022-06-21T21:57')));
-    Standart_db.set(rand2, new Task(rand2, new Date('2022-06-21T21:57'), "Programm", "Todo`s project", "Create todos project with clear JS", new Date('2022-06-21T21:57')));
-    Standart_db.set(rand3, new Task(rand3, new Date('2022-06-21T21:57'), "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", new Date('2022-06-21T21:57')));
+    Standart_db.set(rand1, new Task(rand1, 1655239219561, "Books", "111", "Read jonathan strange & mr norrell", 1655239219561));
+    Standart_db.set(rand2, new Task(rand2, 1655239219561, "Programm", "Todo`s project", "Create todos project with clear JS", 1655239219561));
+    Standart_db.set(rand3, new Task(rand3, 1655239219561, "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", 1655239219561));
 
     Standart_db.forEach((item) => {
         DisplayNewRow(item);
@@ -152,8 +152,9 @@ let EditButton = (el, Modal_window, task) => {
     document.getElementById("input_name").value = task.name;
     document.getElementById("input_category").value = task.category;
     document.getElementById("input_text").value = task.text;
-    document.getElementById("input_deadline").value = "2009-11-11T21:57";
-
+    console.log(new Date(new Date(task.date_end).toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]);
+    
+    document.getElementById("input_deadline").value = new Date(new Date(task.date_end).toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
 }
 
 let DeleteButton = (el) => {
