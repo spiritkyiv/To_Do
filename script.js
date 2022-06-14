@@ -18,6 +18,26 @@ window.onload = function () {
         <i class="fas fa-check"></i>
     </td>`
 
+    function RandomId() {
+        return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
+    }
+
+    let Standart_db = new Map();
+    let rand1 = RandomId();
+    let rand2 = RandomId();
+    let rand3 = RandomId();
+    Standart_db.set(rand1, new Task(rand1, new Date('2022-06-21T21:57'), "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", new Date('2022-06-21T21:57')));
+    Standart_db.set(rand2, new Task(rand2, new Date('2022-06-21T21:57'), "Programm", "Todo`s project", "Create todos project with clear JS", new Date('2022-06-21T21:57')));
+    Standart_db.set(rand3, new Task(rand3, new Date('2022-06-21T21:57'), "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", new Date('2022-06-21T21:57')));
+
+    Standart_db.forEach((item) => {
+        DisplayNewRow(item);
+    })
+
+    function GetTask(id) {
+        return Standart_db.get(id);
+    }
+
     let Archiv_arr = [];
 
     window.onclick = (e) => {
@@ -31,27 +51,49 @@ window.onload = function () {
     }
 
     add_task.onclick = () => {
+
         let task_name = document.getElementById("input_name").value;
         let category = document.getElementById("input_category").value;
         let task_text = document.getElementById("input_text").value;
         let task_deadline = document.getElementById("input_deadline").value;
+        
+        if (add_task.innerText == "Add task") {
 
-        let Added_task = new Task(category, task_name, task_text, task_deadline);
+            let newid = RandomId();
 
-        DisplayNewRow(Added_task);
+            let Added_task = new Task(newid, null, category, task_name, task_text, task_deadline);
 
+            Standart_db.set(newid, Added_task);
+            DisplayNewRow(Added_task);
+        
+            
+
+        } else {
+            
+            let OwnTask = Standart_db.get(Number(document.getElementsByClassName("post_content")[0].childNodes[1].id));
+
+            OwnTask.Edit = [task_name, category, task_text, task_deadline];
+
+            EditRow(OwnTask);
+
+        }
         Modal_window.style.display = 'none';
+    }
 
+    function EditRow(OwnTask) {
+        document.getElementById(OwnTask.id).childNodes[2].innerHTML = OwnTask.category;
+        document.getElementById(OwnTask.id).childNodes[3].innerHTML = OwnTask.name;
+        document.getElementById(OwnTask.id).childNodes[4].innerHTML = OwnTask.text;
+        document.getElementById(OwnTask.id).childNodes[5].innerHTML = Formated_Time(OwnTask.date_end);
     }
 
     Exit_modal.onclick = () => {
-
         Modal_window.style.display = 'none';
-
     }
 
     function DisplayNewRow(task) {
         let new_row = table.insertRow(1);
+        new_row.id = task.id;
         let row_id = new_row.insertCell(0)
         let row_create_date = new_row.insertCell(1);
         let row_category = new_row.insertCell(2);
@@ -59,13 +101,13 @@ window.onload = function () {
         let row_text = new_row.insertCell(4);
         let row_deadline = new_row.insertCell(5);
         let row_datefortext = new_row.insertCell(6);
-        ///
+        /// 
         let edit_button_e = new_row.insertCell(7);
         edit_button_e.innerHTML = edit_button;
         edit_button_e.id = `edit_click`;
         edit_button_e.className = `fa-parent`;
         edit_button_e.addEventListener('click', () => {
-            EditButton(edit_button_e)
+            EditButton(edit_button_e, Modal_window, task)
         });
         ///
         let delete_button_e = new_row.insertCell(8);
@@ -85,11 +127,11 @@ window.onload = function () {
         });
         ///
         row_id.innerHTML = '1';
-        row_create_date.innerHTML = task.date_create;
+        row_create_date.innerHTML = Formated_Time(task.date_create);
         row_category.innerHTML = task.category;
         row_name.innerHTML = task.name;
         row_text.innerHTML = task.text;
-        row_deadline.innerHTML = task.date_end;
+        row_deadline.innerHTML = Formated_Time(task.date_end);
         row_datefortext.innerHTML = task.date_end;
 
         RecountTable();
@@ -97,40 +139,27 @@ window.onload = function () {
 
     add_button.onclick = () => {
         Modal_window.style.display = 'block';
+        add_task.innerHTML = "Add task";
     }
 
-    TableButtons.forEach((item) => {
-        switch (item.id) {
-            case 'edit_click':
-                item.addEventListener("click", () => {
-                    EditButton(item);
-                });
-                break;
-            case 'delete_click':
-                item.addEventListener("click", () => {
-                    DeleteButton(item);
-                })
-                break;
-            case 'complete_click':
-                item.addEventListener("click", () => {
-                    CompleteButton(item)
-                })
-                break;
-            default:
-                break;
-        }
-    })
 }
 
-let EditButton = (el) => {
-    // RowDataToObj(el)
-    console.log(el);
+let EditButton = (el, Modal_window, task) => {
+    Modal_window.style.display = 'block';
+    let add_task = document.getElementById("Add_modal");
+    add_task.innerHTML = "Edit task";
+    document.getElementsByClassName("post_content")[0].childNodes[1].id = task.id
+    document.getElementById("input_name").value = task.name;
+    document.getElementById("input_category").value = task.category;
+    document.getElementById("input_text").value = task.text;
+    document.getElementById("input_deadline").value = "2009-11-11T21:57";
+
 }
+
 let DeleteButton = (el) => {
     table.deleteRow(el.parentNode.rowIndex);
 }
 let CompleteButton = (el) => {
-    // console.log("I`m completed");
     RecountTable();
 }
 
@@ -138,33 +167,24 @@ let ArchivePost = () => {
 
 }
 
-let RowDataToObj = (el) => {
-    let row_data = el.parentNode;
-    let date_create = el.parentNode.childNodes[3].innerHTML;
-    let category = el.parentNode.childNodes[5].innerHTML;
-    let name = el.parentNode.childNodes[7].innerHTML;
-    let text = el.parentNode.childNodes[9].innerHTML;
-    let date_end = el.parentNode.childNodes[11].innerHTML;
-    let data_text = el.parentNode.childNodes[13].innerHTML;
-    let date_from_text = el.parentNode.childNodes[15].innerHTML;
-    let post1 = new Task(date_create, category, name, text, date_end, data_text, date_from_text);
-    console.log(post1);
-}
-
-let AddRow = (task) => {
-    table.AddRow()
-    // let new_task = 
-}
-
 class Task {
-    constructor(category, name, text, date_end, data_text, archiv = false) {
-        this.date_create = Formated_Time();
+    constructor(id, date_start = false, category, name, text, date_end, data_text, archiv = false) {
+        this.id = id;
+        this.date_create = date_start;
         this.category = category;
         this.name = name;
         this.text = text;
-        this.date_end = Formated_Time(date_end);
-        // this.data_text = data_text;
+        this.date_end = date_end;
+        this.archive = archiv;
         this.date_from_text = `text ` + Formated_Time();
+    }
+
+    set Edit(value){
+        [this.category, this.name, this.text, this.date_end] = value;
+    }
+
+    get Test(){
+        return this.text;
     }
 
 }
@@ -172,7 +192,6 @@ class Task {
 let Formated_Time = (p_date) => {
 
     let date = p_date ? new Date(p_date) : new Date();
-
     let options = {
         year: "numeric",
         month: "long",
@@ -189,7 +208,6 @@ let Formated_Time = (p_date) => {
 let RecountTable = () => {
     let tch = document.querySelectorAll("#table tbody tr");
     for (x = 1; x < tch.length; x++) {
-        console.log(tch[x].childNodes);
-        // tch[x].childNodes[0].innerHTML = x;
+        tch[x].childNodes[0].innerHTML = x;
     }
 }

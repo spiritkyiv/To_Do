@@ -21,65 +21,12 @@
             <th>Name</th>
             <th>ToDo`s text</th>
             <th>Deadline</th>
-            <th>Date fot text</th>
+            <th>Time left</th>
             <th class="center-position">Edit</th>
             <th class="center-position">Delete</th>
             <th class="center-position">Compleate</th>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>06.06.2022</td>
-            <td>Programm learning</td>
-            <td>Todo`s project</td>
-            <td>Create todos project with clear JS</td>
-            <td>10/06/2022</td>
-            <td>10/06/2022, 06.06.2022</td>
-            <td id="edit_click" class="fa-parent">
-                <i class="fas fa-edit"></i>
-            </td>
-            <td id="delete_click" class="fa-parent">
-                <i class="fas fa-trash-alt"></i>
-            </td>
-            <td id="complete_click" class="fa-parent">
-                <i class="fas fa-check"></i>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>06.06.2022</td>
-            <td>Programm learning</td>
-            <td>Todo`s project</td>
-            <td>Create todos project with clear JS</td>
-            <td>10/06/2022</td>
-            <td>10/06/2022, 06.06.2022</td>
-            <td id="edit_click" class="fa-parent">
-                <i class="fas fa-edit"></i>
-            </td>
-            <td id="delete_click" class="fa-parent">
-                <i class="fas fa-trash-alt"></i>
-            </td>
-            <td id="complete_click" class="fa-parent">
-                <i class="fas fa-check"></i>
-            </td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>06.06.2022</td>
-            <td>Read Book</td>
-            <td>jonathan strange & mr norrell</td>
-            <td>Read jonathan strange & mr norrell</td>
-            <td>12/06/2022</td>
-            <td>10/06/2022, 06.06.2022</td>
-            <td id="edit_click" class="fa-parent">
-                <i class="fas fa-edit"></i>
-            </td>
-            <td id="delete_click" class="fa-parent">
-                <i class="fas fa-trash-alt"></i>
-            </td>
-            <td id="complete_click" class="fa-parent">
-                <i class="fas fa-check"></i>
-            </td>
-        </tr>
+        
     </table>
     <div id="adder_button">
         <button id="adder" class="button_style button_style_shadow">add new</button>
@@ -87,7 +34,9 @@
 
     <div id="Post_Modal" class="modal_post">
         <div class="post_content">
+            <span id=""></span>
             <span id="close" class="close">&times;</span>
+            <h2 id="modal_title"></h2>
             <form action="javascript:void(0);">
                 <div>
                     <label for="input_name">Task name</label>
