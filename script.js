@@ -1,22 +1,57 @@
 window.onload = function () {
-    let TableButtons = document.querySelectorAll(`[class=fa-parent]`);
-    let Modal_window = document.getElementById("Post_Modal");
-    let close_span = document.getElementById("close");
-    let add_button = document.getElementById("adder");
-    let table = document.getElementById("table");
-    let add_task = document.getElementById("Add_modal");
-    let Exit_modal = document.getElementById("Exit_modal");
+    let TableButtons = document.querySelectorAll(`[class=fa-parent]`),
+     Modal_window = document.getElementById("Post_Modal"),
+     close_span = document.getElementById("close"),
+     add_button = document.getElementById("adder"),
+     table = document.getElementById("table"),
+     add_task = document.getElementById("Add_modal"),
+     Exit_modal = document.getElementById("Exit_modal");
 
-    let edit_button = `<td id="edit_click" class="fa-parent" onclick="console.log("222")">
-    <i class="fas fa-edit"></i>
-            </td>`;
-    let delete_button = `<td id="delete_click" class="fa-parent">
-        <i class="fas fa-trash-alt"></i>
-    </td>`
+     /////
+     setInterval(() => {
+        let v_date = new Date();
+     hour = document.getElementById("hour"),
+     minutes = document.getElementById("minutes"),
+     seconds = document.getElementById("seconds"),
+     ampm = document.getElementById("ampm"),
+     
+        hh = document.getElementById("hh"),
+        mm = document.getElementById("mm"),
+        ss = document.getElementById("ss"),
 
-    let complete_button = `<td id="complete_click" class="fa-parent">
-        <i class="fas fa-check"></i>
-    </td>`
+        hr_dot = document.querySelector('.hr_dot'),
+        min_dot = document.querySelector('.min_dot'),
+        sec_dot = document.querySelector('.sec_dot'),
+
+     h = v_date.getHours(),
+     m = v_date.getMinutes(),
+     s = v_date.getSeconds();
+
+     hour.innerHTML = h
+     minutes.innerHTML = m
+     seconds.innerHTML = s
+
+     hh.style.strokeDashoffset = 440 - (440 * h) / 24;
+     mm.style.strokeDashoffset = 440 - (440 * m) / 60;
+     ss.style.strokeDashoffset = 440 - (440 * s) / 60;
+
+     hr_dot.style.transform = `rotate(${h * 15}deg)`
+     min_dot.style.transform = `rotate(${m * 6}deg)`
+     sec_dot.style.transform = `rotate(${s * 6}deg)`
+
+     });
+     
+
+    // let edit_button = `<td id="edit_click" class="fa-parent" onclick="console.log("222")">
+    // <i class="fas fa-edit"></i>
+    //         </td>`;
+    // let delete_button = `<td id="delete_click" class="fa-parent">
+    //     <i class="fas fa-trash-alt"></i>
+    // </td>`
+
+    // let complete_button = `<td id="complete_click" class="fa-parent">
+    //     <i class="fas fa-check"></i>
+    // </td>`
 
     function RandomId() {
         return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
