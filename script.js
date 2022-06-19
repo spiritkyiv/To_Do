@@ -26,9 +26,9 @@ window.onload = function () {
     let rand1 = RandomId();
     let rand2 = RandomId();
     let rand3 = RandomId();
-    Standart_db.set(rand1, new Task(rand1, 1655239219561, "Books", "111", "Read jonathan strange & mr norrell", 1655239219561));
-    Standart_db.set(rand2, new Task(rand2, 1655239219561, "Programm", "Todo`s project", "Create todos project with clear JS", 1655239219561));
-    Standart_db.set(rand3, new Task(rand3, 1655239219561, "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", 1655239219561));
+    Standart_db.set(rand1, new Task(rand1, 1655102700000, "Books", "111", "Read jonathan strange & mr norrell", 1655189400000));
+    Standart_db.set(rand2, new Task(rand2, 1655239219561, "Programm", "Todo`s project", "Create todos project with clear JS", 1655309199018));
+    Standart_db.set(rand3, new Task(rand3, 1655239219561, "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", 1655309199018));
 
     Standart_db.forEach((item) => {
         DisplayNewRow(item);
@@ -56,7 +56,7 @@ window.onload = function () {
         let category = document.getElementById("input_category").value;
         let task_text = document.getElementById("input_text").value;
         let task_deadline = document.getElementById("input_deadline").value;
-        
+
         if (add_task.innerText == "Add task") {
 
             let newid = RandomId();
@@ -65,14 +65,14 @@ window.onload = function () {
 
             Standart_db.set(newid, Added_task);
             DisplayNewRow(Added_task);
-        
-            
+
+
 
         } else {
-            
+
             let OwnTask = Standart_db.get(Number(document.getElementsByClassName("post_content")[0].childNodes[1].id));
 
-            OwnTask.Edit = [task_name, category, task_text, task_deadline];
+            OwnTask.Edit = [category, task_name, task_text, task_deadline];
 
             EditRow(OwnTask);
 
@@ -132,9 +132,30 @@ window.onload = function () {
         row_name.innerHTML = task.name;
         row_text.innerHTML = task.text;
         row_deadline.innerHTML = Formated_Time(task.date_end);
-        row_datefortext.innerHTML = task.date_end;
+        let TimeLeft = GetTimeDifference(task.date_create, task.date_end)
+        row_datefortext.innerHTML = TimeLeft
 
         RecountTable();
+    }
+
+    function GetTimeDifference(date_start, date_end) {
+        let decimalTime = (24 + ((date_end - date_start - (1000 * 3600 * 24)) / (1000 * 3600)));
+        decimalTime = decimalTime * 60 * 60;
+        let hours = Math.floor((decimalTime / (60 * 60)));
+        decimalTime = decimalTime - (hours * 60 * 60);
+        let minutes = Math.floor((decimalTime / 60));
+        decimalTime = decimalTime - (minutes * 60);
+        let seconds = Math.round(decimalTime);
+        if (hours < 10) {
+            hours = "0" + hours;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        return("" + hours + ":" + minutes + ":" + seconds);
     }
 
     add_button.onclick = () => {
@@ -152,9 +173,9 @@ let EditButton = (el, Modal_window, task) => {
     document.getElementById("input_name").value = task.name;
     document.getElementById("input_category").value = task.category;
     document.getElementById("input_text").value = task.text;
-    console.log(new Date(new Date(task.date_end).toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]);
-    
-    document.getElementById("input_deadline").value = new Date(new Date(task.date_end).toString().split('GMT')[0]+' UTC').toISOString().split('.')[0];
+    console.log(new Date(new Date(task.date_end).toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]);
+
+    document.getElementById("input_deadline").value = new Date(new Date(task.date_end).toString().split('GMT')[0] + ' UTC').toISOString().slice(0, 16);
 }
 
 let DeleteButton = (el) => {
@@ -180,11 +201,11 @@ class Task {
         this.date_from_text = `text ` + Formated_Time();
     }
 
-    set Edit(value){
+    set Edit(value) {
         [this.category, this.name, this.text, this.date_end] = value;
     }
 
-    get Test(){
+    get Test() {
         return this.text;
     }
 
