@@ -1,58 +1,114 @@
 window.onload = function () {
     let TableButtons = document.querySelectorAll(`[class=fa-parent]`),
-     Modal_window = document.getElementById("Post_Modal"),
-     close_span = document.getElementById("close"),
-     add_button = document.getElementById("adder"),
-     table = document.getElementById("table"),
-     add_task = document.getElementById("Add_modal"),
-     Exit_modal = document.getElementById("Exit_modal");
+        Modal_window = document.getElementById("Post_Modal"),
+        close_span = document.getElementById("close"),
+        add_button = document.getElementById("adder"),
+        table = document.getElementById("table"),
+        add_task = document.getElementById("Add_modal"),
+        Exit_modal = document.getElementById("Exit_modal");
 
-     /////
-     setInterval(() => {
+    /////
+
+    function UpdateTimer(id, start, end) {
         let v_date = new Date();
-     hour = document.getElementById("hour"),
-     minutes = document.getElementById("minutes"),
-     seconds = document.getElementById("seconds"),
-     ampm = document.getElementById("ampm"),
-     
-        hh = document.getElementById("hh"),
-        mm = document.getElementById("mm"),
-        ss = document.getElementById("ss"),
+        ///
+        var now = new Date().getTime();
+        var timeleft = end - now;
+        
+        var t_days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+        var t_hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var t_minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+        var t_seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+        ///
+        let day = document.getElementById("day"+id),
+            hour = document.getElementById("hour"+id),
+            minutes = document.getElementById("minutes"+id),
+            seconds = document.getElementById("seconds"+id),
+            ampm = document.getElementById("ampm"),
 
-        hr_dot = document.querySelector('.hr_dot'),
-        min_dot = document.querySelector('.min_dot'),
-        sec_dot = document.querySelector('.sec_dot'),
+            dd = document.getElementById("dd"+id),
+            hh = document.getElementById("hh"+id),
+            mm = document.getElementById("mm"+id),
+            ss = document.getElementById("ss"+id),
 
-     h = v_date.getHours(),
-     m = v_date.getMinutes(),
-     s = v_date.getSeconds();
+            dd_dot =  document.getElementById('hh_dot'+id),
+            hr_dot =  document.getElementById('hh_dot'+id),
+            min_dot = document.getElementById('mm_dot'+id),
+            sec_dot = document.getElementById('ss_dot'+id),
 
-     hour.innerHTML = h
-     minutes.innerHTML = m
-     seconds.innerHTML = s
+            d = t_days,
+            h = t_hours,
+            m = t_minutes,
+            s = t_seconds;
 
-     hh.style.strokeDashoffset = 440 - (440 * h) / 24;
-     mm.style.strokeDashoffset = 440 - (440 * m) / 60;
-     ss.style.strokeDashoffset = 440 - (440 * s) / 60;
+        day.innerHTML = d    
+        hour.innerHTML = h
+        minutes.innerHTML = m
+        seconds.innerHTML = s
 
-     hr_dot.style.transform = `rotate(${h * 15}deg)`
-     min_dot.style.transform = `rotate(${m * 6}deg)`
-     sec_dot.style.transform = `rotate(${s * 6}deg)`
+        hh.style.strokeDashoffset = 440 - (440 * h) / 24;
+        mm.style.strokeDashoffset = 440 - (440 * m) / 60;
+        ss.style.strokeDashoffset = 440 - (440 * s) / 60;
 
-     });
-     
+        dd_dot.style.transform = `rotate(${h * 15}deg)`
+        hr_dot.style.transform = `rotate(${h * 15}deg)`
+        min_dot.style.transform = `rotate(${m * 6}deg)`
+        sec_dot.style.transform = `rotate(${s * 24}deg)`
+    }
 
-    // let edit_button = `<td id="edit_click" class="fa-parent" onclick="console.log("222")">
-    // <i class="fas fa-edit"></i>
-    //         </td>`;
-    // let delete_button = `<td id="delete_click" class="fa-parent">
-    //     <i class="fas fa-trash-alt"></i>
-    // </td>`
+    
+    // setInterval("asd")
 
-    // let complete_button = `<td id="complete_click" class="fa-parent">
-    //     <i class="fas fa-check"></i>
-    // </td>`
+    let edit_button = `<td id="edit_click" class="fa-parent" onclick="console.log("222")">
+    <i class="fas fa-edit"></i>
+            </td>`;
+    let delete_button = `<td id="delete_click" class="fa-parent">
+        <i class="fas fa-trash-alt"></i>
+    </td>`;
 
+    let complete_button = `<td id="complete_click" class="fa-parent">
+        <i class="fas fa-check"></i>
+    </td>`;
+
+    function timer_html(id) { return `<div id="time">
+    <div class="circle" style="--clr:#29cdff;">
+        <div class="dots dd_dot" id="dd_dot${id}"></div>
+        <svg>
+            <circle cx="30" cy="30" r="30"></circle>
+            <circle cx="30" cy="30" r="30" id="dd${id}"></circle>
+        </svg>
+        <div id="day${id}">0</div>
+    </div>
+    <div class="circle" style="--clr:#ff2972;">
+        <div class="dots hr_dot" id="hh_dot${id}"></div>
+        <svg>
+            <circle cx="30" cy="30" r="30"></circle>
+            <circle cx="30" cy="30" r="30" id="hh${id}"></circle>
+        </svg>
+        <div id="hour${id}">00</div>
+    </div>
+    <div class="circle" style="--clr:#fee800;">
+        <div class="dots min_dot" id="mm_dot${id}"></div>
+        <svg>
+            <circle cx="30" cy="30" r="30"></circle>
+            <circle cx="30" cy="30" r="30" id="mm${id}"></circle>
+        </svg>
+        <div id="minutes${id}">00</div>
+    </div>
+    <div class="circle" style="--clr:#04fc43;">
+        <div class="dots sec_dot" id="ss_dot${id}"></div> 
+        <svg>
+            <circle cx="30" cy="30" r="30"></circle>
+            <circle cx="30" cy="30" r="30" id="ss${id}"></circle>
+        </svg>
+        <div id="seconds${id}">00</div>
+    </div>
+    
+</div>`};
+
+// <div class="ap">
+    //     <div id="ampm">AM</div>
+    // </div>
     function RandomId() {
         return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
     }
@@ -61,9 +117,9 @@ window.onload = function () {
     let rand1 = RandomId();
     let rand2 = RandomId();
     let rand3 = RandomId();
-    Standart_db.set(rand1, new Task(rand1, 1655102700000, "Books", "111", "Read jonathan strange & mr norrell", 1655189400000));
-    Standart_db.set(rand2, new Task(rand2, 1655239219561, "Programm", "Todo`s project", "Create todos project with clear JS", 1655309199018));
-    Standart_db.set(rand3, new Task(rand3, 1655239219561, "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", 1655309199018));
+    Standart_db.set(rand1, new Task(rand1, 1655102700000, "Books", "111", "Read jonathan strange & mr norrell", 1656075000000));
+    // Standart_db.set(rand2, new Task(rand2, 1655239219561, "Programm", "Todo`s project", "Create todos project with clear JS", 1655309199018));
+    // Standart_db.set(rand3, new Task(rand3, 1655239219561, "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", 1655309199018));
 
     Standart_db.forEach((item) => {
         DisplayNewRow(item);
@@ -168,12 +224,13 @@ window.onload = function () {
         row_text.innerHTML = task.text;
         row_deadline.innerHTML = Formated_Time(task.date_end);
         let TimeLeft = GetTimeDifference(task.date_create, task.date_end)
-        row_datefortext.innerHTML = TimeLeft
-
+        row_datefortext.innerHTML = timer_html(task.id);
+        setInterval(UpdateTimer, 1000, task.id, task.date_create, task.date_end);
         RecountTable();
     }
 
     function GetTimeDifference(date_start, date_end) {
+        let days = 0;
         let decimalTime = (24 + ((date_end - date_start - (1000 * 3600 * 24)) / (1000 * 3600)));
         decimalTime = decimalTime * 60 * 60;
         let hours = Math.floor((decimalTime / (60 * 60)));
@@ -181,6 +238,9 @@ window.onload = function () {
         let minutes = Math.floor((decimalTime / 60));
         decimalTime = decimalTime - (minutes * 60);
         let seconds = Math.round(decimalTime);
+        if (hours >=24) {
+            days = Math.floor(hours / 24);
+        }
         if (hours < 10) {
             hours = "0" + hours;
         }
@@ -190,7 +250,7 @@ window.onload = function () {
         if (seconds < 10) {
             seconds = "0" + seconds;
         }
-        return("" + hours + ":" + minutes + ":" + seconds);
+        return [days, hours, minutes, seconds];
     }
 
     add_button.onclick = () => {

@@ -141,14 +141,14 @@ tr:nth-child(even) {
 
   #time {
     display: flex;
-    gap: 40px;
+    gap: 25px;
     color: black;
   }
 
   #time .circle {
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -157,8 +157,8 @@ tr:nth-child(even) {
   #time div {
     position: absolute;
     text-align: center;
-    width: 500;
-    font-size: 1.5em;
+    width: 400;
+    font-size: 1.3em;
   }
 
   #time .ap {
@@ -168,8 +168,8 @@ tr:nth-child(even) {
 
   #time .circle svg {
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
     transform: rotate(270deg);
   }  
 
@@ -179,7 +179,7 @@ tr:nth-child(even) {
     fill: transparent;
     stroke: #191919;
     stroke-width: 4;
-    transform: translate(5px, 5px);
+    transform: translate(10px, 10px);
   }  
 
   #time .circle svg circle:nth-child(2) {
@@ -200,8 +200,8 @@ tr:nth-child(even) {
     content: '';
     position: absolute;
     top: -3px;
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     background: var(--clr);
     border-radius: 50%;
     box-shadow: 0 0 20px var(--clr),
