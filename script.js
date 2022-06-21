@@ -10,11 +10,11 @@ window.onload = function () {
     /////
 
     function UpdateTimer(id, start, end) {
-        let v_date = new Date();
-        ///
         var now = new Date().getTime();
         var timeleft = end - now;
         
+        var t_all_days = Math.floor((end - start) / (1000 * 60 * 60 * 24))
+
         var t_days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
         var t_hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var t_minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
@@ -31,7 +31,7 @@ window.onload = function () {
             mm = document.getElementById("mm"+id),
             ss = document.getElementById("ss"+id),
 
-            dd_dot =  document.getElementById('hh_dot'+id),
+            dd_dot =  document.getElementById('dd_dot'+id),
             hr_dot =  document.getElementById('hh_dot'+id),
             min_dot = document.getElementById('mm_dot'+id),
             sec_dot = document.getElementById('ss_dot'+id),
@@ -41,23 +41,21 @@ window.onload = function () {
             m = t_minutes,
             s = t_seconds;
 
-        day.innerHTML = d    
-        hour.innerHTML = h
-        minutes.innerHTML = m
-        seconds.innerHTML = s
+        day.innerHTML = d + `<sub class="sub_circle">days</sub>`  
+        hour.innerHTML = h + `<sub class="sub_circle">hh</sub>`
+        minutes.innerHTML = m + `<sub class="sub_circle">min</sub>`
+        seconds.innerHTML = s + `<sub class="sub_circle">sec</sub>`
 
-        hh.style.strokeDashoffset = 440 - (440 * h) / 24;
-        mm.style.strokeDashoffset = 440 - (440 * m) / 60;
-        ss.style.strokeDashoffset = 440 - (440 * s) / 60;
+        dd.style.strokeDashoffset = 190 - (190 * d) / t_all_days
+        hh.style.strokeDashoffset = 190 - (190 * h) / 24;
+        mm.style.strokeDashoffset = 190 - (190 * m) / 60;
+        ss.style.strokeDashoffset = 190 - (190 * s) / 60;
 
-        dd_dot.style.transform = `rotate(${h * 15}deg)`
+        dd_dot.style.transform = `rotate(${d * (360 / t_all_days)}deg)`
         hr_dot.style.transform = `rotate(${h * 15}deg)`
         min_dot.style.transform = `rotate(${m * 6}deg)`
-        sec_dot.style.transform = `rotate(${s * 24}deg)`
+        sec_dot.style.transform = `rotate(${s * 6}deg)`
     }
-
-    
-    // setInterval("asd")
 
     let edit_button = `<td id="edit_click" class="fa-parent" onclick="console.log("222")">
     <i class="fas fa-edit"></i>

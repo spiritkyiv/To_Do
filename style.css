@@ -158,7 +158,7 @@ tr:nth-child(even) {
     position: absolute;
     text-align: center;
     width: 400;
-    font-size: 1.3em;
+    font-size: 1.2em;
   }
 
   #time .ap {
@@ -170,7 +170,7 @@ tr:nth-child(even) {
     position: relative;
     width: 80px;
     height: 80px;
-    transform: rotate(270deg);
+    transform: rotate(-90deg);
   }  
 
   #time .circle svg circle{ 
@@ -184,13 +184,13 @@ tr:nth-child(even) {
 
   #time .circle svg circle:nth-child(2) {
     stroke: var(--clr);
-    stroke-dasharray: 440;
+    stroke-dasharray: 190;
   } 
 
   .dots {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     z-index: 10;
     display: flex;
     justify-content: center;
@@ -206,4 +206,9 @@ tr:nth-child(even) {
     border-radius: 50%;
     box-shadow: 0 0 20px var(--clr),
     0 0 60px var(--clr)
+  }
+
+  .sub_circle {
+    font-weight: 200;
+    font-size: 0.5em;
   }
