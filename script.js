@@ -6,7 +6,15 @@ window.onload = function () {
         table = document.getElementById("table"),
         add_task = document.getElementById("Add_modal"),
         Exit_modal = document.getElementById("Exit_modal");
-
+        let DeleteButton = (cell, id) => {
+            if (Standart_db.has(id)){
+                Standart_db.delete(id);
+                if (Standart_db.has(id) == false) {
+                    table.deleteRow(cell.parentNode.rowIndex);
+                }
+            }
+            clearInterval(cell.parentNode.childNodes[6].childNodes[0].id);
+        }
     /////
 
     function UpdateTimer(id, start, end) {
@@ -41,7 +49,7 @@ window.onload = function () {
             m = t_minutes,
             s = t_seconds;
 
-        day.innerHTML = d + `<sub class="sub_circle">days</sub>`  
+        day.innerHTML = d + `<sub class="sub_circle">dd</sub>`  
         hour.innerHTML = h + `<sub class="sub_circle">hh</sub>`
         minutes.innerHTML = m + `<sub class="sub_circle">min</sub>`
         seconds.innerHTML = s + `<sub class="sub_circle">sec</sub>`
@@ -57,7 +65,7 @@ window.onload = function () {
         sec_dot.style.transform = `rotate(${s * 6}deg)`
     }
 
-    let edit_button = `<td id="edit_click" class="fa-parent" onclick="console.log("222")">
+    let edit_button = `<td id="edit_click" class="fa-parent"">
     <i class="fas fa-edit"></i>
             </td>`;
     let delete_button = `<td id="delete_click" class="fa-parent">
@@ -68,7 +76,7 @@ window.onload = function () {
         <i class="fas fa-check"></i>
     </td>`;
 
-    function timer_html(id) { return `<div id="time">
+    function timer_html(id, timer_id) { return `<div class="time" id="${timer_id}">
     <div class="circle" style="--clr:#29cdff;">
         <div class="dots dd_dot" id="dd_dot${id}"></div>
         <svg>
@@ -111,13 +119,13 @@ window.onload = function () {
         return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
     }
 
-    let Standart_db = new Map();
+    var Standart_db = new Map();
     let rand1 = RandomId();
     let rand2 = RandomId();
     let rand3 = RandomId();
     Standart_db.set(rand1, new Task(rand1, 1655102700000, "Books", "111", "Read jonathan strange & mr norrell", 1656075000000));
-    // Standart_db.set(rand2, new Task(rand2, 1655239219561, "Programm", "Todo`s project", "Create todos project with clear JS", 1655309199018));
-    // Standart_db.set(rand3, new Task(rand3, 1655239219561, "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", 1655309199018));
+    Standart_db.set(rand2, new Task(rand2, 1655239219561, "Programm", "Todo`s project", "Create todos project with clear JS", 1658667000000));
+    Standart_db.set(rand3, new Task(rand3, 1655239219561, "Books", "jonathan strange & mr norrell", "Read jonathan strange & mr norrell", 1657528402000));
 
     Standart_db.forEach((item) => {
         DisplayNewRow(item);
@@ -203,16 +211,18 @@ window.onload = function () {
         delete_button_e.innerHTML = delete_button;
         delete_button_e.id = `delete_click`;
         delete_button_e.className = `fa-parent`;
-        delete_button_e.addEventListener('click', () => {
-            DeleteButton(delete_button_e)
-        });
+        delete_button_e.onclick = () => DeleteButton(delete_button_e, task.id, timer_id);
+        // delete_button_e.addEventListener('click', () => {
+        //     DeleteButton(delete_button_e)
+        // });
         ///
+        // console.log(Standart_db);
         let complete_button_e = new_row.insertCell(9);
         complete_button_e.innerHTML = complete_button;
         complete_button_e.id = `complete_click`;
         complete_button_e.className = `fa-parent`;
         complete_button_e.addEventListener('click', () => {
-            CompleteButton(complete_button_e);
+            CompleteButton(complete_button_e, timer_id);
         });
         ///
         row_id.innerHTML = '1';
@@ -222,8 +232,14 @@ window.onload = function () {
         row_text.innerHTML = task.text;
         row_deadline.innerHTML = Formated_Time(task.date_end);
         let TimeLeft = GetTimeDifference(task.date_create, task.date_end)
-        row_datefortext.innerHTML = timer_html(task.id);
-        setInterval(UpdateTimer, 1000, task.id, task.date_create, task.date_end);
+        timer_id = setInterval(UpdateTimer, 1000, task.id, task.date_create, task.date_end);
+
+        row_datefortext.innerHTML = timer_html(task.id, timer_id);
+
+        //
+       
+        //
+        console.log(timer_id);
         RecountTable();
     }
 
@@ -256,6 +272,7 @@ window.onload = function () {
         add_task.innerHTML = "Add task";
     }
 
+   
 }
 
 let EditButton = (el, Modal_window, task) => {
@@ -271,10 +288,9 @@ let EditButton = (el, Modal_window, task) => {
     document.getElementById("input_deadline").value = new Date(new Date(task.date_end).toString().split('GMT')[0] + ' UTC').toISOString().slice(0, 16);
 }
 
-let DeleteButton = (el) => {
-    table.deleteRow(el.parentNode.rowIndex);
-}
-let CompleteButton = (el) => {
+
+let CompleteButton = (el,timer_id) => {
+    clearInterval(timer_id);
     RecountTable();
 }
 
